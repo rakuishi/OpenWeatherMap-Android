@@ -79,10 +79,15 @@ public final class AbstractRequest<T> extends Request<T> {
             final String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             final JsonElement element = mReader.fromJson(json, JsonObject.class);
             final T object = (T) mReader.fromJson(element, mClazz);
-            mWeatherError = mReader.fromJson(element, WeatherError.class);
+            WeatherError error = mReader.fromJson(element, WeatherError.class);
 
-            if (object != null && !mWeatherError.isError()) {
-                return Response.success(object, HttpHeaderParser.parseCacheHeaders(response));
+            if (object != null) {
+                if (error != null && error.isError()) {
+                    mWeatherError = error;
+                    return Response.error(new ParseError());
+                } else {
+                    return Response.success(object, HttpHeaderParser.parseCacheHeaders(response));
+                }
             } else {
                 return Response.error(new ParseError());
             }
@@ -91,26 +96,6 @@ public final class AbstractRequest<T> extends Request<T> {
         } catch (JsonSyntaxException e) {
             return Response.error(new ParseError(e));
         }
-    }
-
-    @Override
-    protected VolleyError parseNetworkError(VolleyError volleyError) {
-        NetworkResponse response = volleyError.networkResponse;
-        if (response != null && response.data != null) {
-            try {
-                final String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-                final JsonElement element = mReader.fromJson(json, JsonObject.class);
-                mWeatherError = mReader.fromJson(element, WeatherError.class);
-
-                if (mWeatherError != null && mWeatherError.isError()) {
-                    mErrorListener.onErrorResponse(mWeatherError);
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return volleyError;
     }
 
     public static class Builder<J extends Builder, T> {
