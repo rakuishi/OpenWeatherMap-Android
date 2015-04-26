@@ -25,7 +25,7 @@ public class WeatherError {
     public WeatherError(VolleyError error) {
         NetworkResponse response = error.networkResponse;
         mCode = String.valueOf(response.statusCode);
-        mMessage = error.getMessage();
+        mMessage = error.getMessage() == null ? "" : error.getMessage();
     }
 
     public String getCode() {
@@ -42,12 +42,7 @@ public class WeatherError {
 
     @Override
     public String toString() {
-        if (isError()) {
-            return "code: " + mCode + "\n" +
-                   "message: " + mMessage;
-        } else {
-            return "code: null" + "\n" +
-                   "message: null";
-        }
+        return "code: " + mCode + "\n" +
+               "message: " + mMessage;
     }
 }
