@@ -1,6 +1,7 @@
 package com.rakuishi.weather.api;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
@@ -37,7 +38,7 @@ public class WeatherError {
     }
 
     public boolean isError() {
-        return mCode != null && mCode.length() > 0 && mMessage != null && mMessage.length() > 0;
+        return !TextUtils.isEmpty(mCode) && !TextUtils.isEmpty(mMessage);
     }
 
     @Override
