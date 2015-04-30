@@ -14,17 +14,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by rakuishi on 15/04/25.
  */
-public class OpenWeatherClientAPITest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class OpenWeatherAPIClientTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-    private static final String TAG = OpenWeatherClientAPITest.class.getSimpleName();
+    private static final String TAG = OpenWeatherAPIClientTest.class.getSimpleName();
 
     private MainActivity mActivity;
 
-    public OpenWeatherClientAPITest(Class<MainActivity> activityClass) {
+    public OpenWeatherAPIClientTest(Class<MainActivity> activityClass) {
         super(activityClass);
     }
 
-    public OpenWeatherClientAPITest() {
+    public OpenWeatherAPIClientTest() {
         super(MainActivity.class);
     }
 
@@ -36,7 +36,7 @@ public class OpenWeatherClientAPITest extends ActivityInstrumentationTestCase2<M
 
     public void testCurrentWeatherDataRequest() throws InterruptedException {
         Context context = mActivity.getApplicationContext();
-        final OpenWeatherMapClientAPI client = new OpenWeatherMapClientAPI(Volley.newRequestQueue(context));
+        final OpenWeatherMapAPIClient client = new OpenWeatherMapAPIClient(Volley.newRequestQueue(context));
         final CountDownLatch latch = new CountDownLatch(1);
 
         mActivity.runOnUiThread(new Runnable() {
@@ -66,7 +66,7 @@ public class OpenWeatherClientAPITest extends ActivityInstrumentationTestCase2<M
 
     public void testCurrentWeatherDataRequestNotFoundCity() throws InterruptedException {
         Context context = mActivity.getApplicationContext();
-        final OpenWeatherMapClientAPI client = new OpenWeatherMapClientAPI(Volley.newRequestQueue(context));
+        final OpenWeatherMapAPIClient client = new OpenWeatherMapAPIClient(Volley.newRequestQueue(context));
         final CountDownLatch latch = new CountDownLatch(1);
 
         mActivity.runOnUiThread(new Runnable() {

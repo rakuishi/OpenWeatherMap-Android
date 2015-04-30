@@ -5,14 +5,14 @@ import com.android.volley.RequestQueue;
 /**
  * Created by rakuishi on 15/04/23.
  */
-public class OpenWeatherMapClientAPI {
+public class OpenWeatherMapAPIClient {
 
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5";
     private static final String API_KEY  = null;
 
     private final RequestQueue mRequestQueue;
 
-    public OpenWeatherMapClientAPI(RequestQueue queue) {
+    public OpenWeatherMapAPIClient(RequestQueue queue) {
         mRequestQueue = queue;
     }
 
